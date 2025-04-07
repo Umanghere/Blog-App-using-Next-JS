@@ -47,7 +47,7 @@ export const assets = {
         image:blog_pic_1,
         date:Date.now(),
         category:"Lifestyle",
-        author:"Alex Bennett",
+        author:"Umang Bansal",
         author_img:profile_icon
     },
     {

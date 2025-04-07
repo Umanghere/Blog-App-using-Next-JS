@@ -25,7 +25,7 @@ const BlogList = () => {
         <button
           onClick={() => setMenu("All")}
           className={
-            menu === "All" ? "bg-black text-white py-1 px-4 rounded-sm" : ""
+            menu === "All" ? "bg-black cursor-pointer text-white py-1 px-4 rounded-sm" : " cursor-pointer"
           }
         >
           All
@@ -33,7 +33,7 @@ const BlogList = () => {
         <button
           onClick={() => setMenu("Technology")}
           className={
-            menu === "Technology" ? "bg-black text-white py-1 px-4 rounded-sm" : ""
+            menu === "Technology" ? "bg-black cursor-pointer text-white py-1 px-4 rounded-sm" : " cursor-pointer"
           }
         >
           Technology
@@ -41,7 +41,7 @@ const BlogList = () => {
         <button
           onClick={() => setMenu("Startup")}
           className={
-            menu === "Startup" ? "bg-black text-white py-1 px-4 rounded-sm" : ""
+            menu === "Startup" ? "bg-black cursor-pointer text-white py-1 px-4 rounded-sm" : " cursor-pointer"
           }
         >
           Startup
@@ -49,7 +49,7 @@ const BlogList = () => {
         <button
           onClick={() => setMenu("Lifestyle")}
           className={
-            menu === "Lifestyle" ? "bg-black text-white py-1 px-4 rounded-sm" : ""
+            menu === "Lifestyle" ? "bg-black cursor-pointer text-white py-1 px-4 rounded-sm" : " cursor-pointer"
           }
         >
           Lifestyle

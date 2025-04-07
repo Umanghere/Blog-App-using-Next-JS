@@ -41,9 +41,7 @@ const Header = () => {
       <div className="text-center my-8">
         <h1 className="text-3xl sm:text-5xl font-medium">Latest Blogs</h1>
         <p className="mt-10 max-w-[740px] m-auto text-sm sm:text-base ">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Error at
-          pariatur veniam praesentium blanditiis illo magni accusantium
-          voluptatem{" "}
+        Discover stories that inform, inspire, and spark new ideas. From tech trends to lifestyle insights, explore blogs that keep you curious and engaged.
         </p>
         <form
           onSubmit={onSubmitHandler}
