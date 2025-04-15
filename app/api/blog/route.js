@@ -71,19 +71,6 @@ export async function POST(request){
 
 //Creating API Endpoint to delete Blog
 
-// export async function DELETE(request){
-//     //Storing ID from frontend as the parameter to delete from backend
-//     const id = await request.nextUrl.searchParams.get('id');
-//     // finding blog using this ID
-//     const blog = await BlogModel.findById(id);
-//     // Delete image from Public Folder by using file system
-//     fs.unlink(`./public${blog.image}`, ()=>{});
-//     //Delete blog from Atlas
-//     await BlogModel.findByIdAndDelete(id);
-//     return NextResponse.json({msg: "Blog Deleted"});
-// }
-
-
 export async function DELETE(request) {
     try {
         await connectDB();
