@@ -1,8 +1,7 @@
 import { connectDB } from "@/lib/config/db";
 import BlogModel from "@/lib/models/BlogModel";
+import cloudinary from "@/lib/cloudinary";
 const { NextResponse } = require("next/server");
-import {writeFile} from 'fs/promises'
-const fs = require('fs')
 
 const LoadDB = async () => {
     await connectDB();
@@ -10,7 +9,8 @@ const LoadDB = async () => {
 
 LoadDB();
 
-// API Endpoint to get all blogs
+// API Endpoint to GET all blogs --------- GET METHOD
+
 export async function GET(request) {
 
     const blogId = request.nextUrl.searchParams.get("id");
@@ -24,50 +24,55 @@ export async function GET(request) {
     
 }
 
-// API Endpoint for Uploading Blogs
+
+// API Endpoint for Uploading Blogs -------- POST METHOD
+
 export async function POST(request){
+    
     //getting blogData as formData which will store in this variable
     const formData = await request.formData();
-     //using this to provide a unique name to the image
-    const timeStamp = Date.now();
+  
     //we will get image from the formData in this variable
     const image = formData.get('image');
     if (!image) {
         return NextResponse.json({ success: false, msg: "No image uploaded" }, { status: 400 });
     }
-    // Convert this image into Byte Data before storing in public folder
-    const imageByteData = await image.arrayBuffer()
-    const buffer = Buffer.from(imageByteData)
-    // defining path to store file in public.  
-    const path = `./public/${timeStamp}_${image.name}`
-    //logic to store image in public folder
-    await writeFile(path, buffer);
-    const imgURL = `/${timeStamp}_${image.name}`;
 
-    // // Testing this function
-    // console.log(imgURL);
+    // Convert this image into Byte Data before storing in public folder
+    const arrayBuffer  = await image.arrayBuffer()
+    const buffer = Buffer.from(arrayBuffer)
+
+    // Upload to Cloudinary
+    const uploadResult = await new Promise((resolve, reject) => {
+        cloudinary.uploader.upload_stream({ folder: "blogs" }, (error, result) => {
+        if (error) reject(error);
+        else resolve(result);
+        }).end(buffer);
+    });
+
+
+    const imgURL = uploadResult.secure_url;
 
 
     // use this blogData and blog model to store data in Database
     const blogData = {
-        title: `${formData.get('title')}`,
-        description: `${formData.get('description')}`,
-        category: `${formData.get('category')}`,
-        author: `${formData.get('author')}`,
-        image: `${imgURL}`,
-        authorImg: `${formData.get('authorImg')}`,
-    }
+        title: formData.get("title"),
+        description: formData.get("description"),
+        category: formData.get("category"),
+        author: formData.get("author"),
+        image: imgURL,
+        authorImg: formData.get("authorImg"),
+      };
 
-    try {
+      try {
         await BlogModel.create(blogData);
         console.log("Blog Saved");
         return NextResponse.json({ success: true, msg: "Blog Added" });
-    } catch (error) {
+      } catch (error) {
         console.error("Database error:", error);
         return NextResponse.json({ success: false, msg: "Database error", error: error.message }, { status: 500 });
+      }
     }
-    
-}
 
 //Creating API Endpoint to delete Blog
 

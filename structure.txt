@@ -1,0 +1,123 @@
+Folder PATH listing for volume Data
+Volume serial number is 3A61-62DB
+D:.
+|   eslint.config.mjs
+|   jsconfig.json
+|   next.config.mjs
+|   package-lock.json
+|   package.json
+|   postcss.config.mjs
+|   README.md
+|   structure.txt
+|
++---app
+|   |   favicon.ico
+|   |   globals.css
+|   |   layout.js
+|   |   page.js
+|   |   
+|   +---admin
+|   |   |   layout.jsx
+|   |   |   page.jsx
+|   |   |   
+|   |   +---addProduct
+|   |   |       page.jsx
+|   |   |       
+|   |   +---blogList
+|   |   |       page.jsx
+|   |   |       
+|   |   \---subscriptions
+|   |           page.jsx
+|   |           
+|   +---api
+|   |   +---blog
+|   |   |       route.js
+|   |   |       
+|   |   \---email
+|   |           route.js
+|   |           
+|   \---blogs
+|       \---[id]
+|               page.jsx
+|               
++---assets
+|       add_icon.png
+|       arrow.png
+|       assets.js
+|       blog_icon.png
+|       blog_pic_1.png
+|       blog_pic_10.png
+|       blog_pic_11.png
+|       blog_pic_12.png
+|       blog_pic_13.png
+|       blog_pic_14.png
+|       blog_pic_15.png
+|       blog_pic_16.png
+|       blog_pic_2.png
+|       blog_pic_3.png
+|       blog_pic_4.png
+|       blog_pic_5.png
+|       blog_pic_6.png
+|       blog_pic_7.png
+|       blog_pic_8.png
+|       blog_pic_9.png
+|       email_icon.png
+|       facebook_icon.png
+|       googleplus_icon.png
+|       logo.png
+|       logo_light.png
+|       pfp.jpg
+|       profile_icon.png
+|       profile_icon2.png
+|       profile_icon23.png
+|       rofile_icon.png
+|       twitter_icon.png
+|       upload_area.png
+|       
++---components
+|   |   BlogItem.jsx
+|   |   BlogList.jsx
+|   |   Footer.jsx
+|   |   Header.jsx
+|   |   
+|   \---AdminComponents
+|           BlogTableItem.jsx
+|           Sidebar.jsx
+|           SubsTableItem.jsx
+|           
++---lib
+|   +---config
+|   |       db.js
+|   |       
+|   \---models
+|           BlogModel.js
+|           EmailModel.js
+|           
+\---public
+        1743584134646_blog_pic_12.png
+        1743606020073_1668321951504.jpg
+        1743606143711_1672052109392-01.jpeg
+        1743606179978_1724083560493.jpg
+        1743606574321_1724083560406.jpeg
+        1743606681573_IMG_2261.jpg
+        1743606702206_1724083560406.jpeg
+        1743606788433_1724083560481.jpg
+        1743607801909_ChatGPT Image Mar 28, 2025, 06_18_55 PM.png
+        1743608122456_IMG_8197.JPG
+        1743608157296_IMG-20211020-WA0014.jpg
+        1743685464096_WhatsApp Image 2024-04-23 at 8.41.45 PM.jpeg
+        1743690495385_1724083560775.jpg
+        1743692971962_918279600959_status_82321968b48d413ca17f1f8b643099cc.jpg
+        1743693650228_1668321951504.jpg
+        1743694012259_IMG-20211122-WA0024.jpg
+        1744743432414_85c20086e17abf3f7c1c554db9d2a102.jpg
+        1745668073931_00265c195679495.661202f517162.jpg
+        author_im.png
+        author_img.png
+        file.svg
+        globe.svg
+        next.svg
+        uthor_img.png
+        vercel.svg
+        window.svg
+        
