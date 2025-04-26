@@ -46,7 +46,7 @@ const Page = () => {
             <p className="mt-1 pb-2 text-lg max-w-[70px] mx-auto ">{data.author}</p>
         </div>
     </div>
-    <div className="mx5 max-w-[800px] md:mx-aut mt-[-100px] mb-10 ">
+    <div className="mx5 max-w-[800px] md:mx-auto mt-[-100px] mb-10 ">
         <Image className="border-4 border-white" src={data.image} width={1280} height={720} alt="Image " />
 
         <div className="blogContent" dangerouslySetInnerHTML={{__html:data.description}}>

@@ -21,7 +21,7 @@ const Page = () => {
     const name = event.target.name;
     const value = event.target.value;
     setData((data) => ({ ...data, [name]: value }));
-    console.log(data);
+    // console.log(data);
   };
 
   const onSubmitHandle = async (e) => {

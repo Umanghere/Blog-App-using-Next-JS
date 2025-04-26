@@ -64,7 +64,7 @@ export async function POST(request){
 
       try {
         await BlogModel.create(blogData);
-        console.log("Blog Saved");
+        // console.log("Blog Saved");
         return NextResponse.json({ success: true, msg: "Blog Added" });
       } catch (error) {
         console.error("Database error:", error);
