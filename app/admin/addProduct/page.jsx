@@ -21,7 +21,6 @@ const Page = () => {
     const name = event.target.name;
     const value = event.target.value;
     setData((data) => ({ ...data, [name]: value }));
-    // console.log(data);
   };
 
   const onSubmitHandle = async (e) => {
@@ -64,11 +63,11 @@ const Page = () => {
 
   return (
     <>
-      <form onSubmit={onSubmitHandle} className="pt-5 px-5 sm:pt-12 sm:pl-16">
-        <p className="text-xl">Upload Thumbnail</p>
-        <label htmlFor="image" className="group block w-fit mt-4">
+      <form onSubmit={onSubmitHandle} className="pt-4 sm:pt-5 md:pt-8 lg:pt-12 px-4 sm:px-8 md:px-12 lg:px-16 w-full max-w-3xl mx-auto">
+        <p className="text-lg sm:text-xl font-medium">Upload Thumbnail</p>
+        <label htmlFor="image" className="group block w-fit mt-3 sm:mt-4">
           <Image
-            className="transition-transform duration-200 group-hover:scale-106 cursor-pointer"
+            className="transition-transform duration-200 group-hover:scale-105 cursor-pointer"
             src={!image ? assets.upload_area : URL.createObjectURL(image)}
             width={140}
             height={70}
@@ -82,51 +81,57 @@ const Page = () => {
           hidden
           required
         />
-        <p className="text-xl mt-4">Blog Title</p>
+        
+        <p className="text-lg sm:text-xl font-medium mt-4 sm:mt-6">Blog Title</p>
         <input
           name="title"
           onChange={onChangeHandler}
           value={data.title}
-          className="w-full sm:w-[500px] mt-4 px-4 py-3 border"
+          className="w-full mt-2 sm:mt-3 px-3 sm:px-4 py-2 sm:py-3 border focus:outline-none focus:ring-1 focus:ring-black"
           type="text"
           placeholder="Type here"
           required
         />
-        <p className="text-xl mt-4">Author Name</p>
+        
+        <p className="text-lg sm:text-xl font-medium mt-4 sm:mt-6">Author Name</p>
         <input
           name="author"
           onChange={onChangeHandler}
           value={data.author}
-          className="w-full sm:w-[500px] mt-4 px-4 py-3 border"
+          className="w-full mt-2 sm:mt-3 px-3 sm:px-4 py-2 sm:py-3 border focus:outline-none focus:ring-1 focus:ring-black"
           type="text"
           placeholder="Enter Author's name"
           required
         />
-        <p className="text-xl mt-4">Blog Description</p>
+        
+        <p className="text-lg sm:text-xl font-medium mt-4 sm:mt-6">Blog Description</p>
         <textarea
           name="description"
           onChange={onChangeHandler}
           value={data.description}
-          className="w-full sm:w-[500px] mt-4 px-4 py-3 border"
+          className="w-full mt-2 sm:mt-3 px-3 sm:px-4 py-2 sm:py-3 border focus:outline-none focus:ring-1 focus:ring-black"
           type="textarea"
-          rows={8}
+          rows={6}
           placeholder="Write content here"
           required
         />
-        <p className="text-xl mt-4">Blog Category</p>
+        
+        <p className="text-lg sm:text-xl font-medium mt-4 sm:mt-6">Blog Category</p>
         <select
           name="category"
           onChange={onChangeHandler}
           value={data.category}
-          className="w-40 mt-4 px-4 py-3 border text-gray-500"
+          className="w-full max-w-[160px] mt-2 sm:mt-3 px-3 sm:px-4 py-2 sm:py-3 border text-gray-500 focus:outline-none focus:ring-1 focus:ring-black"
         >
           <option value="Startup">Startup</option>
           <option value="Technology">Technology</option>
           <option value="Lifestyle">Lifestyle</option>
         </select>
         <br />
-        <button type="submit" className="mt-8 w-40 h-12 bg-black text-white">
-          {" "}
+        <button 
+          type="submit" 
+          className="mt-6 sm:mt-8 w-full max-w-[160px] h-10 sm:h-12 bg-black text-white transition-colors hover:bg-gray-800"
+        >
           Add
         </button>
       </form>

@@ -7,11 +7,22 @@ import { ToastContainer } from "react-toastify";
 export default function Home() {
   return (
     <>
-    <ToastContainer theme="light" />
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="light"
+        toastClassName="custom-toast-body" // 👈 only this needed
+      />
       <Header />
-      <BlogList />
+      <main className="flex-grow">
+        <BlogList />
+      </main>
       <Footer />
-      
+
     </>
   );
 }

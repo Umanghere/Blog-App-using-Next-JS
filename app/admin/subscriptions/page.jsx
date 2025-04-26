@@ -6,22 +6,35 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 const page = () => {
-
   const [emails, setEmails] = useState([])
 
-  const fetchEmail = async() =>{
+  const fetchEmail = async() => {
     const response = await axios.get('/api/email');
     setEmails(response.data.emails);
   }
 
-  const deleteEmail = async (mongoId)=> {
+  const deleteEmail = async (mongoId) => {
     const response = await axios.delete('/api/email', {
       params: {
         id:mongoId
       }
     })
     if(response.data.success){
-      toast.success(response.data.msg);
+      toast.success(response.data.msg, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        className: 'custom-toast',
+        bodyClassName: 'custom-toast-body',
+        style: {
+          // Customize width here
+          width: '300px',
+          minHeight: '60px'
+        }
+      });
       fetchEmail();
     }else{
       toast.error("Error");
@@ -33,29 +46,39 @@ const page = () => {
   }, [])
 
   return (
-    <div className='flex-1 pt-5 px-5 sm:pt-12 sm:px-16'>
-      <p className='text-2xl'>All Subscriptions</p>
-      <div className='relative max-w-[600px] h-[80vh] overflow-x-auto mt-4 border border-gray-400 scrollbarHide '>
-        <table className='w-full text-sm text-gray-500'>
-          <thead className='text-sm text-left text-gray-700 uppercase bg-gray-300'>
-            <tr>
-              <th scope='col' className='px-6 py-3'>
-                Email Subscription
-              </th>
-              <th scope='col' className='hidden sm:block px-6 py-3'>
-                Date
-              </th>
-              <th scope='col' className='px-6 py-3'>
-                Action
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {emails.map((item, index)=>{
-              return <SubsTableItem key={index} deleteEmail={deleteEmail} mongoId={item._id} email={item.email} date={item.date} />
-            })}
-          </tbody>
-        </table>
+    <div className='flex-1 pt-4 sm:pt-6 md:pt-8 lg:pt-12 px-4 sm:px-8 md:px-12 lg:px-16'>
+      <p className='text-xl sm:text-2xl font-medium'>All Subscriptions</p>
+      <div className='relative h-[70vh] sm:h-[80vh] w-full max-w-[600px] overflow-x-auto mt-4 border border-gray-400 scrollbarHide'>
+        <div className="min-w-full overflow-hidden">
+          <table className='w-full text-sm text-gray-500'>
+            <thead className='text-xs sm:text-sm text-left text-gray-700 uppercase bg-gray-300'>
+              <tr>
+                <th scope='col' className='px-3 sm:px-6 py-2 sm:py-3'>
+                  Email Subscription
+                </th>
+                <th scope='col' className='hidden sm:table-cell px-3 sm:px-6 py-2 sm:py-3'>
+                  Date
+                </th>
+                <th scope='col' className='px-3 sm:px-6 py-2 sm:py-3'>
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {emails.map((item, index) => {
+                return (
+                  <SubsTableItem 
+                    key={index} 
+                    deleteEmail={deleteEmail} 
+                    mongoId={item._id} 
+                    email={item.email} 
+                    date={item.date} 
+                  />
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   )
