@@ -9,8 +9,8 @@ const LoadDB = async () => {
 
 LoadDB();
 
-// API Endpoint to GET all blogs --------- GET METHOD
 
+// API Endpoint to GET all blogs --------- GET METHOD
 export async function GET(request) {
 
     const blogId = request.nextUrl.searchParams.get("id");
@@ -20,15 +20,13 @@ export async function GET(request) {
     }else{
         const blogs = await BlogModel.find({})
         return NextResponse.json({blogs})
-    }
-    
+    }    
 }
 
 
 // API Endpoint for Uploading Blogs -------- POST METHOD
 
 export async function POST(request){
-    
     //getting blogData as formData which will store in this variable
     const formData = await request.formData();
   
@@ -74,34 +72,50 @@ export async function POST(request){
       }
     }
 
+
+
 //Creating API Endpoint to delete Blog
 
 export async function DELETE(request) {
-    try {
-        await connectDB();
-        // Get the blog ID from query parameters
-        const id = request.nextUrl.searchParams.get("id");
-        if (!id) {
-            return NextResponse.json({ success: false, msg: "Blog ID is required" }, { status: 400 });
-        }
-        // Find the blog in the database
-        const blog = await BlogModel.findById(id);
-        if (!blog) {
-            return NextResponse.json({ success: false, msg: "Blog not found" }, { status: 404 });
-        }
-        // Delete the image from the public folder if it exists
-        if (blog.image) {
-            const imagePath = `./public${blog.image}`;
-            if (fs.existsSync(imagePath)) {
-                fs.unlinkSync(imagePath);
-            }
-        }
-        // Delete the blog from the database
-        await BlogModel.findByIdAndDelete(id);
-
-        return NextResponse.json({ success: true, msg: "Blog Deleted" });
-    } catch (error) {
-        console.error("Error deleting blog:", error);
-        return NextResponse.json({ success: false, msg: "Internal Server Error", error: error.message }, { status: 500 });
+  try {
+    const id = request.nextUrl.searchParams.get("id");
+    if (!id) {
+      return NextResponse.json({ success: false, msg: "Blog ID is required" }, { status: 400 });
     }
+
+    const blog = await BlogModel.findById(id);
+    if (!blog) {
+      return NextResponse.json({ success: false, msg: "Blog not found" }, { status: 404 });
+    }
+
+    // Delete image from Cloudinary
+    if (blog.image) {
+      const publicId = extractPublicId(blog.image);
+      if (publicId) {
+        await cloudinary.uploader.destroy(publicId);
+      }
+    }
+
+    // Delete blog from DB
+    await BlogModel.findByIdAndDelete(id);
+
+    return NextResponse.json({ success: true, msg: "Blog Deleted" });
+  } catch (error) {
+    console.error("DELETE Error:", error);
+    return NextResponse.json({ success: false, msg: "Internal Server Error", error: error.message }, { status: 500 });
+  }
 }
+
+
+// Helper function to extract Cloudinary public ID
+function extractPublicId(url) {
+    try {
+      const parts = url.split("/");
+      const filename = parts[parts.length - 1]; // last part (e.g., abc123.png)
+      const publicIdWithExtension = filename.split(".")[0]; // remove .jpg or .png
+      return `blogs/${publicIdWithExtension}`; // uploaded inside 'blogs' folder
+    } catch (error) {
+      console.error("Error extracting public ID:", error);
+      return null;
+    }
+  }
