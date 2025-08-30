@@ -6,15 +6,32 @@ import axios from "axios";
 const BlogList = () => {
   const [menu, setMenu] = useState("All");
   const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true)
 
   const fetchBlogs = async () => {
-    const response = await axios.get("api/blog");
-    setBlogs(response.data.blogs);
+    try {
+      const response = await axios.get("api/blog");
+      setBlogs(response.data.blogs);
+    } 
+    catch (error) {
+      console.error("Error: ", error)
+    }
+    finally{
+      setLoading(false)
+    }
   };
 
   useEffect(() => {
     fetchBlogs();
   }, []);
+
+  if (loading) {
+        return (
+          <div className="flex justify-center items-center h-[60vh]">
+            <h1 className="text-2xl font-bold">Loading Blogs...</h1>
+          </div>
+        );
+     }
 
   return (
     <>

@@ -14,10 +14,12 @@ LoadDB();
 export async function GET(request) {
 
     const blogId = request.nextUrl.searchParams.get("id");
+    // If GET request contains "?id=something" in the URL, return single blog i.e, at the time of clicking a blog to open
     if(blogId){
         const blog = await BlogModel.findById(blogId);
         return NextResponse.json(blog);
     }else{
+        // If there is no ID, return all the blogs
         const blogs = await BlogModel.find({})
         return NextResponse.json({blogs})
     }    

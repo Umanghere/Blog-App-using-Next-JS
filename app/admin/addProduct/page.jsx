@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 
 const Page = () => {
   const [image, setImage] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [data, setData] = useState({
     title: "",
@@ -25,6 +26,7 @@ const Page = () => {
 
   const onSubmitHandle = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("description", data.description);
@@ -58,12 +60,17 @@ const Page = () => {
       toast.error(
         `Error: ${error.response?.data?.msg || "Something went wrong"}`
       );
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <>
-      <form onSubmit={onSubmitHandle} className="pt-4 sm:pt-5 md:pt-8 lg:pt-12 px-4 sm:px-8 md:px-12 lg:px-16 w-full max-w-3xl mx-auto">
+      <form
+        onSubmit={onSubmitHandle}
+        className="pt-4 sm:pt-5 md:pt-8 lg:pt-12 px-4 sm:px-8 md:px-12 lg:px-16 w-full max-w-3xl mx-auto"
+      >
         <p className="text-lg sm:text-xl font-medium">Upload Thumbnail</p>
         <label htmlFor="image" className="group block w-fit mt-3 sm:mt-4">
           <Image
@@ -75,15 +82,19 @@ const Page = () => {
           />
         </label>
         <input
+          disabled={isLoading}
           onChange={(e) => setImage(e.target.files[0])}
           type="file"
           id="image"
           hidden
           required
         />
-        
-        <p className="text-lg sm:text-xl font-medium mt-4 sm:mt-6">Blog Title</p>
+
+        <p className="text-lg sm:text-xl font-medium mt-4 sm:mt-6">
+          Blog Title
+        </p>
         <input
+          disabled={isLoading}
           name="title"
           onChange={onChangeHandler}
           value={data.title}
@@ -92,9 +103,12 @@ const Page = () => {
           placeholder="Type here"
           required
         />
-        
-        <p className="text-lg sm:text-xl font-medium mt-4 sm:mt-6">Author Name</p>
+
+        <p className="text-lg sm:text-xl font-medium mt-4 sm:mt-6">
+          Author Name
+        </p>
         <input
+          disabled={isLoading}
           name="author"
           onChange={onChangeHandler}
           value={data.author}
@@ -103,9 +117,12 @@ const Page = () => {
           placeholder="Enter Author's name"
           required
         />
-        
-        <p className="text-lg sm:text-xl font-medium mt-4 sm:mt-6">Blog Description</p>
+
+        <p className="text-lg sm:text-xl font-medium mt-4 sm:mt-6">
+          Blog Description
+        </p>
         <textarea
+          disabled={isLoading}
           name="description"
           onChange={onChangeHandler}
           value={data.description}
@@ -115,9 +132,12 @@ const Page = () => {
           placeholder="Write content here"
           required
         />
-        
-        <p className="text-lg sm:text-xl font-medium mt-4 sm:mt-6">Blog Category</p>
+
+        <p className="text-lg sm:text-xl font-medium mt-4 sm:mt-6">
+          Blog Category
+        </p>
         <select
+          disabled={isLoading}
           name="category"
           onChange={onChangeHandler}
           value={data.category}
@@ -128,11 +148,17 @@ const Page = () => {
           <option value="Lifestyle">Lifestyle</option>
         </select>
         <br />
-        <button 
-          type="submit" 
-          className="mt-6 sm:mt-8 w-full max-w-[160px] h-10 sm:h-12 bg-black text-white transition-colors hover:bg-gray-800"
+        <button
+          disabled={isLoading}
+          type="submit"
+          className={`mt-6 sm:mt-8 w-full max-w-[160px] h-10 sm:h-12 text-white transition-colors 
+            ${
+            isLoading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-black hover:bg-gray-800"
+          }`}
         >
-          Add
+            {isLoading ? "Loading..." : "Add"}
         </button>
       </form>
     </>
