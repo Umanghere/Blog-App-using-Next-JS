@@ -7,6 +7,7 @@ const LoadDB = async () => {
     await connectDB();
 }
 
+// Connect Database
 LoadDB();
 
 
