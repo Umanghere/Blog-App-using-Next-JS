@@ -56,7 +56,7 @@ const Page = () => {
         toast.error("Failed to add blog.");
       }
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error("Error submitting form: ", error);
       toast.error(
         `Error: ${error.response?.data?.msg || "Something went wrong"}`
       );

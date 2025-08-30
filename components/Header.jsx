@@ -7,31 +7,44 @@ import { toast } from "react-toastify";
 
 const Header = () => {
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const formData = new FormData();
     formData.append("email", email);
     const response = await axios.post("/api/email", formData);
-    if (response.data.success) {
-      toast.success(response.data.msg, {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              className: 'custom-toast',
-              bodyClassName: 'custom-toast-body',
-              style: {
-                // Customize width here
-                width: '300px',
-                minHeight: '60px'
-              }
-            });;
-      setEmail("");
-    } else {
-      toast.error("Error");
+    try{
+      if (response.data.success) {
+        toast.success(response.data.msg, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                className: 'custom-toast',
+                bodyClassName: 'custom-toast-body',
+                style: {
+                  // Customize width here
+                  width: '300px',
+                  minHeight: '60px'
+                }
+              });;
+        setEmail("");
+      } else {
+        toast.error("Error");
+      }
+    }
+    catch(error){
+      console.error("Error Subscribing email: ", error)
+      toast.error(
+              `Error: ${error.response?.data?.msg || "Something went wrong"}`
+            ); 
+    }
+    finally{
+      setIsLoading(false)
     }
   };
 
@@ -67,6 +80,7 @@ const Header = () => {
           className="flex justify-between w-full max-w-[500px] mx-auto mt-6 sm:mt-10 border border-black shadow-[-4px_4px_0px_#000000] sm:shadow-[-7px_7px_0px_#000000] px-1 sm:px-0"
         >
           <input
+            disabled={isLoading}
             onChange={(e) => setEmail(e.target.value)}
             value={email}
             type="email"
@@ -75,10 +89,15 @@ const Header = () => {
             className="pl-2 sm:pl-4 outline-none text-sm sm:text-base w-full py-2 sm:py-3"
           />
           <button
+            disabled={isLoading}
             type="submit"
-            className="border-l border-black py-2 sm:py-4 px-2 sm:px-4 md:px-8 whitespace-nowrap text-sm sm:text-base active:bg-gray-600 active:text-white"
+            className={`border-l border-black py-2 sm:py-4 px-2 sm:px-4 md:px-8 whitespace-nowrap text-sm sm:text-base transition-colors ${
+              isLoading 
+                ? "bg-gray-200 cursor-not-allowed" 
+                : "active:bg-gray-200 active:text-white"
+            }`}
           >
-            Subscribe
+            {isLoading ? "Loading..." : "Subscribe"}
           </button>
         </form>
       </div>
